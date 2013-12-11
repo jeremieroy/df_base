@@ -1,7 +1,32 @@
 #pragma once
 
-#define DF_VERSION_MAJOR 0
-#define DF_VERSION_MINOR 1
+/* Summary of defined macro
+
+*** compiler ***
+DF_COMPILER_MSVC  // visual c++ 
+DF_COMPILER_GCC   // gcc
+
+*** platform ***
+DF_PLATFORM_WIN
+DF_PLATFORM_LINUX
+DF_PLATFORM_FREEBSD
+
+DF_PLATFORM_IOS
+DF_PLATFORM_IOS_SIM
+DF_PLATFORM_OSX
+
+DF_PLATFORM_ANDROID
+
+
+*** import/export ***
+DF_API_EXPORT
+DF_API_IMPORT
+
+*** alignment ***
+DF_ALIGN_PRE( ALIGNMENT )
+DF_ALIGN_POST( ALIGNMENT ) 
+
+*/
 
 // Platform detection OS
 #if defined( _WIN64 )
@@ -38,6 +63,9 @@
 
 //Compiler specific macro
 #if defined( _MSC_VER )
+    # if ( _MSC_FULL_VER < 150030729 )
+        # error Compilation requires at least VS2008 with SP1 applied to compile.  Please update your compiler.
+    # endif
     #define DF_COMPILER_MSVC
     #define DF_API_EXPORT __declspec(dllexport)
     #define DF_API_IMPORT __declspec(dllimport)
